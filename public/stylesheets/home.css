@@ -1,0 +1,159 @@
+
+.carousel-destacados {
+    position: relative;
+    margin: 0 40px;
+  }
+  .carousel-destacados .glider-track {
+    padding: 20px 0;
+  }
+  .carousel-destacados .carousel-container {
+    padding: 0 20px;
+  }
+  .carousel-destacados article {
+    display: flex;
+    align-items: center;
+    padding: 20px;
+  }
+  .carousel-destacados .glider-next-destacados,
+  .carousel-destacados .glider-prev-destacados {
+    position: absolute;
+    display: block;
+    width: 40px;
+    height: 300px;
+    border: none;
+    border-radius: 5px;
+    top: 20px;
+    cursor: pointer;
+    line-height: 30px;
+    font-size: 30px;
+    text-align: center;
+    background: white;
+    opacity: 0%;
+  }
+  .carousel-destacados .glider-next-destacados:hover,
+  .carousel-destacados .glider-prev-destacados:hover {
+    opacity: 10%;
+  }
+  .carousel-destacados .glider-prev-destacados {
+    left: -30px;
+  }
+  .carousel-destacados .glider-next-destacados {
+    right: -30px;
+  }
+  .carousel-destacados .carousel-elements-destacados {
+    overflow: hidden;
+  }
+  .carousel-destacados .glider-dot {
+    background-color: white;
+    display: block;
+    width: 30px;
+    height: 4px;
+    opacity: 0.2;
+  }
+  .carousel-destacados .glider-dot:hover {
+    opacity: 0.5;
+  }
+  .carousel-destacados .glider-dot.active {
+    opacity: 1;
+  }
+  .carousel-destacados .card {
+    height: 320px;
+    margin: 0 5px;
+  }
+  .carousel-destacados .card img {
+    height: 45%;
+    object-fit: cover;
+  }
+  .carousel-destacados .card h4 {
+    font-family: "Bebas Neue";
+  }
+  .carousel-destacados .card a {
+    position: relative;
+    left: 60%;
+    bottom: -35%;
+    width: 40%;
+  }
+  
+  @media (min-width: 425px) {
+    .title-destacados {
+      margin-top: 20px;
+    }
+  
+    .carousel-destacados .glider-next-destacados,
+  .carousel-destacados .glider-prev-destacados {
+      width: 40px;
+      height: 355px;
+    }
+    .carousel-destacados .card img {
+      height: 50%;
+    }
+  }
+  @media only screen and (min-device-width: 768px) and (max-device-width: 1024px) {
+    .banner-bandera {
+      height: 160px;
+    }
+  
+    .carousel-marcas .glider-dot {
+      display: block;
+      width: 30px;
+      height: 4px;
+      background-color: white;
+      opacity: 0.2;
+      border-radius: 0;
+    }
+  
+    .title-destacados {
+      margin-top: 40px;
+    }
+  
+    .carousel-destacados .glider-next-destacados,
+  .carousel-destacados .glider-prev-destacados {
+      height: 255px;
+    }
+    .carousel-destacados .card img {
+      height: 45%;
+    }
+  }
+  @media (min-width: 1024px) {
+    
+    .carousel-marcas a {
+      transition: all 0.5s ease;
+    }
+    .carousel-marcas a:hover {
+      transform: scale(1.1);
+    }
+  
+    .carousel-destacados .glider-next-destacados,
+  .carousel-destacados .glider-prev-destacados {
+      height: 330px;
+    }
+    .carousel-destacados .card {
+      margin: 0 10px;
+      transition: all 0.5s ease;
+    }
+    .carousel-destacados .card img {
+      height: 45%;
+    }
+    .carousel-destacados .card:hover {
+      transform: scale(1.05);
+    }
+  }
+  @media (min-width: 1200px) {
+  
+    .carousel-destacados .glider-next-destacados,
+  .carousel-destacados .glider-prev-destacados {
+      height: 360px;
+    }
+    .carousel-destacados .card img {
+      height: 45%;
+    }
+  }
+  @media (min-width: 1440px) {
+    .carousel-destacados {
+      margin: 100px 0;
+    }
+    .carousel-destacados .glider-next-destacados,
+  .carousel-destacados .glider-prev-destacados {
+      height: 280px;
+    }
+  }

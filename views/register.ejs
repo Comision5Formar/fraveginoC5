@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+  <%- include('partials/head')  %> 
+  <body>
+    <header >
+      <div class="container-fluid">
+      <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+          <div class="container-fluid">
+            <a id="marca" class="navbar-brand" href="/">Fravegino</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+              <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                  <a class="nav-link active" aria-current="page" href="/"></a>
+                </li>
+            </div>
+          </div>
+        </nav>
+      </div>
+  </header>
+    <div class="container">
+        <form action=""  method="POST" class="row g-3">
+            <div class="col-md-6">
+                <label for="inputName4" class="form-label">Nombre</label>
+                <input type="text" class="form-control" id="inputName4" name="nombre" value="<%= (typeof old != 'undefined' && old.nombre ? old.nombre : null) %>">
+                <span class="text-danger"><%= (typeof errores != 'undefined' && errores.nombre ? errores.nombre.msg : null) %> </span>
+              </div>
+            <div class="col-md-6">
+              <label for="inputEmail4" class="form-label">Email</label>
+              <input type="email" class="form-control" id="inputEmail4" name="email" value="<%= (typeof old != 'undefined' && old.email ? old.email : null) %>">
+              <span class="text-danger"><%= (typeof errores != 'undefined' && errores.email ? errores.email.msg : null) %> </span>
+
+            </div>
+            <div class="col-md-6">
+              <label for="inputPassword4" class="form-label">Contraseña</label>
+              <input type="password" class="form-control" id="inputPassword4" name="pass">
+              <span class="text-danger"><%= (typeof errores != 'undefined' && errores.pass ? errores.pass.msg : null) %> </span>
+
+            </div>
+            <div class="col-md-6">
+                <label for="inputPassword4" class="form-label">Repite tu contraseña</label>
+                <input type="password" class="form-control" id="inputPassword4" name="pass2">
+                <span class="text-danger"><%= (typeof errores != 'undefined' && errores.pass2 ? errores.pass2.msg : null) %> </span>
+
+              </div>
+         
+            <div class="col-12">
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="gridCheck" name="bases" value="off">
+                <label class="form-check-label" for="gridCheck">
+                  Acepto bases y condiciones
+                </label>
+              </div>
+              <span class="text-danger"><%= (typeof errores != 'undefined' && errores.bases ? errores.bases.msg : null) %> </span>
+
+            </div>
+            <div class="col-12">
+              <button type="submit" class="btn btn-primary">Registrarse</button>
+              <p class="mt-4">¿Estás registrado? <a href="/users/login">Inicia sesión</a></p>
+            </div>
+          </form>
+    </div>
+
+ 
+    
+    
+    
+    <%- include('partials/footer')  %> 
+
+  </body>
+</html>
