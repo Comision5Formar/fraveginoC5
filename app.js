@@ -4,7 +4,7 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 const session = require('express-session');
-
+const localCheck = require('./middlewares/localCheck')
 var logger = require('morgan');
 
 var indexRouter = require('./routes/index');
@@ -27,6 +27,8 @@ app.use(session({
   resave: false,
   saveUninitialized: true
 }));
+
+app.use(localCheck)
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);

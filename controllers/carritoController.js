@@ -54,12 +54,32 @@ module.exports = {
 
     },
     quitarItem : (req,res) => {
+        let carrito = req.session.carrito;
+        let id = req.params.id;
+
+        let pos = verificar(carrito,id)
+
+        let item  = carrito[pos]
+
+        if(item.cantidad > 1){
+            item.cantidad = item.cantidad - 1
+            item.total = item.cantidad * item.precio
+            carrito[pos] = item
+            req.session.carrito = carrito
+            return res.status(200).json(req.session.carrito)
+        }else{
+            carrito.splice(item,1)
+            req.session.carrito = carrito
+            return res.status(200).json(req.session.carrito)
+        }
+
 
     },
     mostrarCarrito : (req,res) => {
-
+        return res.status(200).json(req.session.carrito)
     },
     vaciarCarrito : (req,res) => {
-
+        req.session.carrito = []
+        return res.status(200).json(req.session.carrito)
     }
 }
