@@ -23,6 +23,8 @@ module.exports = {
         })
         Promise.all([categorias,destacados,ofertas])
         .then(([categorias,destacados,ofertas])=> {
+            
+            !req.session.carrito ? req.session.carrito = [] : null
 
             res.render('index',{
                 categorias,
