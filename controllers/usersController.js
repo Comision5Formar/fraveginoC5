@@ -55,6 +55,73 @@ module.exports = {
                             maxAge : 1000 * 60
                         })
                     }
+
+                    if(req.session.carrito.length != 0){
+                        db.Order.findOne({
+                            where : {
+                                userId : req.session.userLogin.id,
+                                status : 'pending'
+                            },
+                            include : [
+                                {
+                                    association : 'carrito',
+                                    include : [
+                                        {
+                                            association : 'producto',
+                                            include : [
+                                                {association : 'imagenes'}
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ]
+                        })
+                        .then(orden => {
+                            if(orden) {
+                                let carritoNew = req.session.carrito;
+                                req.session.carrito = [];
+                                orden.carrito.forEach(item => {
+                                    let producto = {
+                                        id : item.producto.id,
+                                        nombre : item.producto.nombre,
+                                        imagen : item.producto.imagenes[0].link,
+                                        precio : item.producto.precio,
+                                        cantidad : +item.cantidad,
+                                        total : +item.producto.precio * +item.cantidad,
+                                        ordenId : order.id
+                                    }
+                                    req.session.carrito.push(producto)
+                                });
+                                req.session.carrito = [
+                                    ...req.session.carrito,
+                                    ...carritoNew
+                                ]
+                                return res.redirect('/')
+
+                            }else {
+                                db.Order.create({
+                                    userId : userLogin.id,
+                                    status : 'pending'
+                                })
+                                .then(orden => {
+                                    req.session.carrito.forEach(item => {
+                                        item.orderId = orden.id
+
+                                        db.Cart.create({
+                                            userId : orden.userId,
+                                            productId : item.id,
+                                            cantidad : item.cantidad,
+                                            orderId : orden.id
+                                        })
+                                    })
+                                    return res.redirect('/')
+
+                                })
+                            }
+                        })
+                    }else{
+                        
+                    }
                     return res.redirect('/')
 
                 }else {
