@@ -88,7 +88,7 @@ module.exports = {
                                         precio : item.producto.precio,
                                         cantidad : +item.cantidad,
                                         total : +item.producto.precio * +item.cantidad,
-                                        ordenId : order.id
+                                        ordenId : orden.id
                                     }
                                     req.session.carrito.push(producto)
                                 });
@@ -100,10 +100,11 @@ module.exports = {
 
                             }else {
                                 db.Order.create({
-                                    userId : userLogin.id,
+                                    userId : req.session.userLogin.id,
                                     status : 'pending'
                                 })
                                 .then(orden => {
+                                    console.log('------->>>>> orden creada!!!')
                                     req.session.carrito.forEach(item => {
                                         item.orderId = orden.id
 
@@ -120,9 +121,47 @@ module.exports = {
                             }
                         })
                     }else{
-                        
+                        db.Order.findOne({
+                            where : {
+                                userId : req.session.userLogin.id,
+                                status : 'pending'
+                            },
+                            include : [
+                                {
+                                    association : 'carrito',
+                                    include : [
+                                        {
+                                            association : 'producto',
+                                            include : [
+                                                {association : 'imagenes'}
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ]
+                        })
+                        .then(orden =>{
+                            if(orden){
+                                orden.carrito.forEach(item => {
+                                    let producto = {
+                                        id : item.producto.id,
+                                        nombre : item.producto.nombre,
+                                        imagen : item.producto.imagenes[0].link,
+                                        precio : item.producto.precio,
+                                        cantidad : +item.cantidad,
+                                        total : item.producto.precio * item.cantidad,
+                                        orderId : orden.id
+                                    }
+                                    req.session.carrito.push(producto)                  
+                                })
+                                console.log(req.session.carrito)
+                                return res.redirect('/')
+                            }
+                            return res.redirect('/')
+                           
+                        })
+                        .catch(error => console.log(error))
                     }
-                    return res.redirect('/')
 
                 }else {
                     return res.render('login',{
