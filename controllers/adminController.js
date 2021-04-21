@@ -8,7 +8,7 @@ module.exports = {
         return res.render('admin/products')
     },
     getProducts : (req,res) => {
-        db.Product.finAll({
+        db.Product.findAll({
             include : [
                 {association : 'categoria'}
             ]
