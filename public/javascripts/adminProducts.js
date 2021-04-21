@@ -1,6 +1,8 @@
 console.log('JS adminProducts success');
 
-const productsBox = document.getElementById('productsBox')
+const productsBox = document.getElementById('productsBox');
+const selectOrder = document.getElementById('order');
+const selectLimit = document.getElementById('limit')
 
 window.addEventListener('load', async () => {
     try {
@@ -35,3 +37,41 @@ const viewProducts = (productos) => {
         productsBox.innerHTML += item
     }
 }
+
+selectOrder.addEventListener('change', () => {
+    let productos = JSON.parse(localStorage.getItem('productos'));
+
+    switch (selectOrder.value) {
+        case 'nombre':
+            productos.sort( (a,b) => (a.nombre > b.nombre) ? 1 : (a.nombre < b.nombre) ? -1 : 0)
+            localStorage.setItem('productos',JSON.stringify(productos));
+            viewProducts(productos)
+            break;
+        case 'mayorPrecio':
+            productos.sort( (a,b) => (a.precio < b.precio) ? 1 : (a.precio > b.precio) ? -1 : 0)
+            localStorage.setItem('productos',JSON.stringify(productos));
+            viewProducts(productos)
+            break;
+        case 'menorPrecio':
+            productos.sort( (a,b) => (a.precio > b.precio) ? 1 : (a.precio < b.precio) ? -1 : 0)
+            localStorage.setItem('productos',JSON.stringify(productos));
+            viewProducts(productos)
+            break;
+        case 'descuento':
+            productos.sort( (a,b) => (a.descuento < b.descuento) ? 1 : (a.descuento > b.descuento) ? -1 : 0)
+            localStorage.setItem('productos',JSON.stringify(productos));
+            viewProducts(productos)
+            break;
+        case 'categoria':
+            productos.sort( (a,b) => (a.categoria.nombre > b.categoria.nombre) ? 1 : (a.categoria.nombre < b.categoria.nombre) ? -1 : 0)
+            localStorage.setItem('productos',JSON.stringify(productos));
+            viewProducts(productos)
+            break;
+        default:
+            productos.sort( (a,b) => (a.id > b.id) ? 1 : (a.id < b.id) ? -1 : 0)
+            localStorage.setItem('productos',JSON.stringify(productos));
+            viewProducts(productos)
+            break;
+    }
+
+})
