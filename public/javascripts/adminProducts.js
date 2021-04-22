@@ -2,7 +2,8 @@ console.log('JS adminProducts success');
 
 const productsBox = document.getElementById('productsBox');
 const selectOrder = document.getElementById('order');
-const selectLimit = document.getElementById('limit')
+const selectLimit = document.getElementById('limit');
+const paginationBox = document.getElementById('paginationBox');
 
 window.addEventListener('load', async () => {
     try {
@@ -73,5 +74,70 @@ selectOrder.addEventListener('change', () => {
             viewProducts(productos)
             break;
     }
+})
+
+selectLimit.addEventListener('change',()=> {
+    pagination(JSON.parse(localStorage.getItem('productos')),selectLimit.value,1)
+})
+
+const pagination = (array,limit,current) => {
+    const total = array.length;
+    const pages = Math.ceil(total/limit);
+    sessionStorage.setItem('pages',pages);
+
+    paginationBox.innerHTML = '<li class="page-item goFirst" hidden><a class="page-link" href="">&laquo</a></li>'
+
+    for (let i = 1; i <= pages; i++) {
+        let page = `
+        <li class="page-item ${current == i ? 'active' : ''}" id="pag${i}">
+            <a class="page-link" href="">${i}</a>
+        </li>`
+        paginationBox.innerHTML += page
+    }
+
+    paginationBox.innerHTML += '<li class="page-item goLast"><a class="page-link" href="">&raquo</a></li>'
+
+    let productos = array.slice(0,limit)
+
+    viewProducts(productos)
+
+}
+
+paginationBox.addEventListener('click',(e)=> {
+    e.preventDefault();
+    const goFirstPage = document.querySelector('.goFirst');
+    const goLastPage = document.querySelector('.goLast');
+
+    const page = e.target.parentElement;
+    const pages = document.querySelectorAll('.page-item');
+
+    pages.forEach(page => page.classList.remove('active'));
+    page.classList.add('active');
+
+    page.innerText == 1 ? goFirstPage.setAttribute('hidden',true) : goFirstPage.removeAttribute('hidden');
+
+    page.innerText == sessionStorage.getItem('pages') ? goLastPage.setAttribute('hidden',true) : goLastPage.removeAttribute('hidden');
+
+    if(page.classList.contains('goFirst')){
+        pages.forEach(item => item.innerText == 1 ? item.classList.add('active') : item.classList.remove('active'));
+        goFirstPage.setAttribute('hidden',true);
+        return goPage(JSON.parse(localStorage.getItem('productos')),selectLimit.value,1);
+    }
+
+    if(page.classList.contains('goLast')){
+        pages.forEach(item => item.innerText == sessionStorage.getItem('pages') ? item.classList.add('active') : item.classList.remove('active'));
+        goLastPage.setAttribute('hidden',true);
+        return goPage(JSON.parse(localStorage.getItem('productos')),selectLimit.value,sessionStorage.getItem('pages'));
+    }
+
+    goPage(JSON.parse(localStorage.getItem('productos')),selectLimit.value,page.innerText)
 
 })
+
+const goPage = (array,limit,current) => {
+    let offset = (limit * current) - limit;
+    let productos = array.slice(offset,limit * current);
+
+    viewProducts(productos)
+
+}  
